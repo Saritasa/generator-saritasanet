@@ -1,0 +1,26 @@
+{
+  "name": "generator-saritasanet",
+  "version": "0.1.0",
+  "description": "Projects boilerplate for .NET team",
+  "main": "index.js",
+  "files":[
+    "app"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saritasa/generator-saritasanet.git"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "Konstantin Vasilev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Saritasa/generator-saritasanet/issues"
+  },
+  "homepage": "https://github.com/Saritasa/generator-saritasanet#readme",
+  "dependencies": {
+    "yeoman-generator": "^0.24.1",
+    "uuid": "^3.0.1"
+  }
+}
