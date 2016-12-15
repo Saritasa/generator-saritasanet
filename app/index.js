@@ -128,6 +128,9 @@ module.exports = generators.Base.extend({
             case (WEB):
 
             this.fs.copyTpl(this.templatePath('Project.csproj'), this.destinationPath(projectFolder + this.appname + '.csproj'), this.templateData);
+            this.fs.copyTpl(this.templatePath('Web.config'), this.destinationPath(projectFolder + 'Web.config'), this.templateData);
+            this.fs.copy(this.templatePath('Web.Debug.config'), this.destinationPath(projectFolder + 'Web.Debug.config'));
+            this.fs.copy(this.templatePath('Web.Release.config'), this.destinationPath(projectFolder + 'Web.Release.config'));
             break;
         }
     }
