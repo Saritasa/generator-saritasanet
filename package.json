@@ -2,9 +2,10 @@
   "name": "generator-saritasanet",
   "version": "0.1.0",
   "description": "Projects boilerplate for .NET team",
-  "main": "index.js",
+  "main": "app/index.js",
   "files":[
-    "app"
+    "app",
+    "solution"
   ],
   "repository": {
     "type": "git",
@@ -20,7 +21,7 @@
   },
   "homepage": "https://github.com/Saritasa/generator-saritasanet#readme",
   "dependencies": {
-    "yeoman-generator": "^0.24.1",
+    "yeoman-generator": "^1.0.1",
     "uuid": "^3.0.1"
   }
 }
