@@ -36,5 +36,5 @@ Generator.prototype.askCompanyName = function () {
 
 Generator.prototype.invokePowerShellCommand = function(command) {
     var nugetFunctions = path.join(__dirname, './tools/nuget.ps1');
-    this.log(this.spawnCommand('powershell', ['-Command', '&{ . ' + nugetFunctions + '; ' + command + ' }']));
+    this.spawnCommand('powershell', ['-Command', '&{ . ' + nugetFunctions + '; ' + command + ' }']);
 };

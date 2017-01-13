@@ -29,8 +29,7 @@ function Invoke-NugetRestore
 
     $solutionDirectory = (Get-Item $ProjectPath).Directory.Parent.FullName
     $solutionDirectory = "$solutionDirectory\"
-    $packagesDirectory = (Get-Item $ProjectPath).Directory.FullName
-    $packagesDirectory = "$packagesDirectory\packages\"
+
     &$nugetExePath 'restore' $ProjectPath '-SolutionDirectory' $solutionDirectory
     if ($LASTEXITCODE)
     {

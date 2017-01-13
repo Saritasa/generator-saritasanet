@@ -165,6 +165,7 @@ Generator.prototype.configureTemplate = function () {
 Generator.prototype.writing = function () {
 
     this.fs.copyTpl(this.templatePath('packages.config'), this.destinationPath(this.projectFolder + 'packages.config'), this.templateData);
+    this.fs.copyTpl(this.templatePath('AssemblyInfo.cs'), this.destinationPath(this.projectFolder + 'Properties/AssemblyInfo.cs'), this.templateData);
     
     this.sourceRoot(path.join(__dirname, './templates/' + this.options['type']));
     switch (this.options['type']) {
