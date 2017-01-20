@@ -16,11 +16,18 @@ var Generator = class extends YoGenerator {
 
         this.originalSource = this.sourceRoot();
     }
+    destinationPath (path) {
+        if (this.options.newRoot) {
+            path = this.options.newRoot + '/' + path;
+        }
+        return super.destinationPath(path);
+    }
 };
 module.exports = Generator;
 
 Generator.prototype.askCompanyName = function () {
-    if (this.options['companyName']) {
+    if (this.options.companyName) {
+        this.templateData.companyName = this.options.companyName;
         return;
     }
 
@@ -29,7 +36,7 @@ Generator.prototype.askCompanyName = function () {
         message: 'Company name:',
         default: 'Saritasa'
     }]).then(answer => {
-        this.options['companyName'] = answer.company;
+        this.options.companyName = answer.company;
         this.templateData.companyName = answer.company;
     });
 };
