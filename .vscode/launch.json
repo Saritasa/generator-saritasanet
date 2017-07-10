@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Yo proj",
+            "program": "C:/Users/Konstantin/AppData/Roaming/npm/node_modules/yo/lib/cli.js",
+            "args": [
+                "saritasanet"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Yo solution",
+            "program": "C:/Users/Konstantin/AppData/Roaming/npm/node_modules/yo/lib/cli.js",
+            "args": [
+                "saritasanet:solution"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceRoot}\\app\\index.js"
+        }
+    ]
+}
