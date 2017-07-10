@@ -37,5 +37,6 @@ Generator.prototype.configureTemplate = function () {
 };
 
 Generator.prototype.writing = function () {
-    this.fs.copy(this.templatePath('Solution.sln'), this.options.solutionFilePath);
+    this.log('Creating solution file: ' + this.options.solutionFilePath);
+    this.invokeVSCommand('Create-Solution ' + this.options.solutionFilePath);
 };

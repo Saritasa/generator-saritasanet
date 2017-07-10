@@ -178,7 +178,7 @@ var appendLine = function(source, replace, searchingRegex) {
     return replaceResult;
 };
 
-Generator.prototype._addProjectToSolution = function() {
+Generator.prototype._addProjectToSolution = function(projectPath) {
     if (!this.options.solutionFilePath) {
         return;
     }
@@ -186,29 +186,8 @@ Generator.prototype._addProjectToSolution = function() {
         this.log.error('Solution file not found: ' + this.options.solutionFilePath);
     }
 
-    var projectTypeKey = this.templateData.projectTypeKey.toUpperCase();
-    var projectKey = this.templateData.guid.toUpperCase();
-    var projectName = this.templateData.projName;
-
-    var solutionFileContents = this.fs.read(this.options.solutionFilePath);
-
-    // find start of Projects section declaration
-    var projectSectionRegex = /MinimumVisualStudioVersion\s=.*$/gm;
-    var projectConfiguration = `
-Project("{${projectTypeKey}}") = "${projectName}", "${projectName}\\${projectName}.csproj", "{${projectKey}}"
-EndProject`;
-    solutionFileContents = appendLine(solutionFileContents, projectConfiguration, projectSectionRegex);
-
-    var projectPlatformConfigurationRegex = /GlobalSection\(ProjectConfigurationPlatforms\)\s=\spostSolution.*$/gm;
-    var tab = '\t\t';
-    var projectPlatformConfiguration = `
-\t\t{${projectKey}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-\t\t{${projectKey}}.Debug|Any CPU.Build.0 = Debug|Any CPU
-\t\t{${projectKey}}.Release|Any CPU.ActiveCfg = Release|Any CPU
-\t\t{${projectKey}}.Release|Any CPU.Build.0 = Release|Any CPU`;
-    solutionFileContents = appendLine(solutionFileContents, projectPlatformConfiguration, projectPlatformConfigurationRegex);
-
-    this.fs.write(this.options.solutionFilePath, solutionFileContents);
+    this.log('Adding proj file to solution.');
+    this.invokeVSCommand('Add-Project -SolutionPath \'' + this.options.solutionFilePath + '\' -ProjectPath \'' + projectPath + '\'');
 };
 
 Generator.prototype.writing = function () {
@@ -216,21 +195,23 @@ Generator.prototype.writing = function () {
     this.fs.copyTpl(this.templatePath('AssemblyInfo.cs'), this.destinationPath(this.projectFolder + 'Properties/AssemblyInfo.cs'), this.templateData);
     
     this.sourceRoot(path.join(__dirname, './templates/' + this.options.type));
+    var projFilePath;
     switch (this.options.type) {
         case (WEB):
-        this.fs.copyTpl(this.templatePath('Project.csproj'), this.destinationPath(this.projectFolder + this.options.projName + '.csproj'), this.templateData);
+        projFilePath = this.destinationPath(this.projectFolder + this.options.projName + '.csproj');
+        this.fs.copyTpl(this.templatePath('Project.csproj'), projFilePath, this.templateData);
         this.fs.copyTpl(this.templatePath('Project.csproj.user'), this.destinationPath(this.projectFolder + this.options.projName + '.csproj.user'), this.templateData);
         this.fs.copyTpl(this.templatePath('Web.config'), this.destinationPath(this.projectFolder + 'Web.config'), this.templateData);
         this.fs.copy(this.templatePath('Web.Debug.config'), this.destinationPath(this.projectFolder + 'Web.Debug.config'));
         this.fs.copy(this.templatePath('Web.Release.config'), this.destinationPath(this.projectFolder + 'Web.Release.config'));
         break;
     }
-    this._addProjectToSolution();
+    this.projectFilePath = projFilePath;
 };
 
 Generator.prototype.install = function() {
-    var projectFilePath = this.destinationPath(this.projectFolder + this.options.projName + '.csproj');
-    this.log('Installing nuget dependencies for ' + projectFilePath);
+    this._addProjectToSolution(this.projectFilePath);
+    this.log('Installing nuget dependencies for ' + this.projectFilePath);
     // install nuget packages
-    this.invokePowerShellCommand('Invoke-NugetRestore ' + projectFilePath);
+    this.invokeNugetCommand('Invoke-NugetRestore ' + this.projectFilePath);
 };

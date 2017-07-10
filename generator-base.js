@@ -41,7 +41,12 @@ Generator.prototype.askCompanyName = function () {
     });
 };
 
-Generator.prototype.invokePowerShellCommand = function(command) {
-    var nugetFunctions = path.join(__dirname, './tools/nuget.ps1');
-    this.spawnCommand('powershell', ['-Command', '&{ . ' + nugetFunctions + '; ' + command + ' }']);
+Generator.prototype.invokeNugetCommand = function(command) {
+    var moduleLocation = path.join(__dirname, './tools/nuget.ps1');
+    this.spawnCommand('powershell', ['-Command', '&{ . ' + moduleLocation + '; ' + command + ' }']);
+};
+
+Generator.prototype.invokeVSCommand = function(command) {
+    var moduleLocation = path.join(__dirname, './tools/vs.ps1');
+    this.spawnCommandSync('powershell', ['-Command', '&{ . ' + moduleLocation + '; ' + command + ' }']);
 };
