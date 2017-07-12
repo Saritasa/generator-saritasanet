@@ -49,4 +49,5 @@ Generator.prototype.writing = function () {
     });
     this.fs.copy(this.templatePath('README.md'), this.destinationPath('README.md'));
     this.fs.copy(this.templatePath('TODO.txt'), this.destinationPath('TODO.txt'));
+    this.fs.copy(this.templatePath('.gitignore'), this.destinationPath('.gitignore'));
 };
