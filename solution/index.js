@@ -42,4 +42,9 @@ Generator.prototype.writing = function () {
     this.invokeVSCommand('Create-Solution ' + this.options.solutionFilePath);
     this.fs.copy(this.templatePath('CHANGELOG.txt'), this.destinationPath('CHANGELOG.txt'));
     this.fs.copy(this.templatePath('INSTALL.md'), this.destinationPath('INSTALL.md'));
+    this.fs.copyTpl(this.templatePath('LICENSE'), this.destinationPath('LICENSE'),
+    {
+        companyName: this.options.companyName,
+        year: new Date().getFullYear()
+    });
 };
