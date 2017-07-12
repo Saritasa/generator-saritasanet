@@ -40,4 +40,5 @@ Generator.prototype.configureTemplate = function () {
 Generator.prototype.writing = function () {
     this.log('Creating solution file: ' + this.options.solutionFilePath);
     this.invokeVSCommand('Create-Solution ' + this.options.solutionFilePath);
+    this.fs.copy(this.templatePath('CHANGELOG.txt'), this.destinationPath('CHANGELOG.txt'));
 };
