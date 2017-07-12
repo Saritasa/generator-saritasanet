@@ -47,4 +47,5 @@ Generator.prototype.writing = function () {
         companyName: this.options.companyName,
         year: new Date().getFullYear()
     });
+    this.fs.copy(this.templatePath('README.md'), this.destinationPath('README.md'));    
 };
