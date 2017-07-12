@@ -29,6 +29,7 @@ Generator.prototype.askSolutionName = function () {
             projectNamePrefix: fullSolutionName + '.',
             solutionFilePath: this.options.solutionFilePath
         });
+        this.composeWith(require.resolve('generator-psgallery/app'));
     });
 };
 
