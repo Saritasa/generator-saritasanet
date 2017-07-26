@@ -60,6 +60,10 @@ Generator.prototype.askProjectType = function () {
             {
                 name: applicationTypes[WEB].name,
                 value: WEB
+            },
+            {
+                name: applicationTypes[CLASSLIBRARY].name,
+                value: CLASSLIBRARY
             }
         ]
     }]).then(answer => {
@@ -151,15 +155,6 @@ Generator.prototype.configureGeneric = function () {
     this.projectFolder = this.options.projName + '/';
 };
 
-var appendLine = function(source, replace, searchingRegex) {
-    var match = searchingRegex.exec(source);
-
-    var replaceResult = source.substring(0, searchingRegex.lastIndex)
-        + replace
-        + source.substring(searchingRegex.lastIndex);
-    return replaceResult;
-};
-
 Generator.prototype._addProjectToSolution = function(projectPath) {
     if (!this.options.solutionFilePath) {
         return;
@@ -177,11 +172,10 @@ Generator.prototype.writing = function () {
     this.fs.copyTpl(this.templatePath('AssemblyInfo.cs'), this.destinationPath(this.projectFolder + 'Properties/AssemblyInfo.cs'), this.templateData);
     
     this.sourceRoot(path.join(__dirname, './templates/' + this.options.type));
-    var projFilePath;
+    const projFilePath = this.destinationPath(this.projectFolder + this.options.projName + '.csproj');
+    this.fs.copyTpl(this.templatePath('Project.csproj'), projFilePath, this.templateData);
     switch (this.options.type) {
         case (WEB):
-        projFilePath = this.destinationPath(this.projectFolder + this.options.projName + '.csproj');
-        this.fs.copyTpl(this.templatePath('Project.csproj'), projFilePath, this.templateData);
         this.fs.copyTpl(this.templatePath('Project.csproj.user'), this.destinationPath(this.projectFolder + this.options.projName + '.csproj.user'), this.templateData);
         this.fs.copyTpl(this.templatePath('Web.config'), this.destinationPath(this.projectFolder + 'Web.config'), this.templateData);
         this.fs.copy(this.templatePath('Web.Debug.config'), this.destinationPath(this.projectFolder + 'Web.Debug.config'));
