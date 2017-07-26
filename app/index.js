@@ -144,6 +144,7 @@ Generator.prototype.configureTemplate = function () {
     this.templateData.projName = this.options.projName;
     this.templateData.port = this.port;
     this.templateData.guid = guid();
+    this.templateData.year = new Date().getFullYear();
 };
 
 Generator.prototype.configureGeneric = function () {
