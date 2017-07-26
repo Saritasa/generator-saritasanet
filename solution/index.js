@@ -18,6 +18,11 @@ Generator.prototype.askSolutionName = function () {
         validate: function (input) {
             return input != '';
         }
+    }, {
+        name: 'setupPsake',
+        message: 'Would you like to setup psake scripts?',
+        type: 'confirm',
+        default: true
     }]).then(answers => {
         this.options.solution = answers.solution;
         var fullSolutionName = this.options.companyName + '.' + this.options.solution;
@@ -29,7 +34,9 @@ Generator.prototype.askSolutionName = function () {
             projectNamePrefix: fullSolutionName + '.',
             solutionFilePath: this.options.solutionFilePath
         });
-        this.composeWith(require.resolve('generator-psgallery/app'));
+        if (answers.setupPsake) {
+            this.composeWith(require.resolve('generator-psgallery/app'));
+        }
     });
 };
 
