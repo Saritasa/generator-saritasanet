@@ -129,31 +129,12 @@ Generator.prototype.askWebSpecific = function() {
         return;
     }
 
-    var done = this.async();
-    this.prompt([{
-        name: 'port',
-        message: 'Wich port to use? 0 for random.',
-        default: '0',
-        validate: function(input) {
-            // port number can only be an integer from 0 to 99999
-            var intNumber = parseInt(input);
-            if (input != intNumber) {
-                return false;
-            }
-            return intNumber >= 0 && intNumber <= 99999; 
-        }
-    }]).then(portAnswer => {
-        this.port = parseInt(portAnswer.port);
-        if (this.port == 0) {
-            getRandomPort()
-                .then(port => {
-                    this.port = port;
-                    done();
-                });
-        } else {
+    let done = this.async();
+    getRandomPort()
+        .then(port => {
+            this.port = port;
             done();
-        }
-    });
+        });
 };
 
 Generator.prototype.configureTemplate = function () {
